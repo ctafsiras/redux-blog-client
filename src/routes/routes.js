@@ -1,12 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../layout/Dashboard/Dashboard";
 import Main from "../layout/Main/Main";
-import AddProduct from "../pages/Dashboard/AddProduct";
-import ProductList from "../pages/Dashboard/ProductList";
 import About from "../pages/Main/About";
-import Cart from "../pages/Main/Cart";
 import Home from "../pages/Main/Home";
-import TopRated from "../pages/Main/TopRated";
+import ReadingHistory from "../pages/Main/ReadingHistory";
+import CreatePost from "../pages/Dashboard/CreatePost";
+import AllPosts from "../pages/Dashboard/AllPosts";
 
 const routes = createBrowserRouter([
   {
@@ -22,12 +21,8 @@ const routes = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "top-rated",
-        element: <TopRated />,
-      },
-      {
-        path: "cart",
-        element: <Cart />,
+        path: "reading-history",
+        element: <ReadingHistory />,
       },
     ],
   },
@@ -36,12 +31,12 @@ const routes = createBrowserRouter([
     element: <Dashboard />,
     children: [
       {
-        path: "/dashboard",
-        element: <ProductList />,
+        path: "all-posts",
+        element: <AllPosts />,
       },
       {
-        path: "add-product",
-        element: <AddProduct />,
+        path: "create-post",
+        element: <CreatePost />,
       },
     ],
   },

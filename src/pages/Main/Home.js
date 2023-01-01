@@ -1,72 +1,49 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ProductCard from "../../components/ProductCard";
-import { toggleBrand, toggleStock } from "../../redux/actions/filterActions";
-import loadProductData from "../../redux/thunk/products/fetchProducts";
+import PostCard from "../../components/PostCard";
+import { sortPost } from "../../redux/actions/filterActions";
+import { getContent } from "../../redux/actions/postAction";
+import loadAllPosts from "../../redux/thunk/posts/fetchPosts";
 
 const Home = () => {
-  const filters = useSelector((state) => state.filter.filters);
-  const products = useSelector((state) => state.product.products);
-  const { brands, stock } = filters;
+  const latest = useSelector((state) => state.filter.latest);
+  const posts = useSelector((state) => state.product.posts);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadProductData());
+    dispatch(loadAllPosts());
   }, [dispatch]);
 
   const activeClass = "text-white bg-indigo-500 border-white";
 
+  if (!posts) {
+    return <div>Kiccu nai</div>
+  }
   let content;
 
-  if (products.length) {
-    content = products.map((product) => (
-      <ProductCard key={product.model} product={product} />
+  if (latest) {
+    content = posts.map((post) => (
+      <PostCard key={post._id} post={post} />
     ));
   }
-
-  if (products.length && (stock || brands.length)) {
-    content = products
-      .filter((product) => {
-        if (stock) {
-          return product.status === true;
-        }
-        return product;
-      })
-      .filter((product) => {
-        if (brands.length) {
-          return brands.includes(product.brand);
-        }
-        return product;
-      })
-      .map((product) => <ProductCard key={product.model} product={product} />);
+  else {
+    content = posts.reverse().map((post) => (<PostCard key={post._id} post={post} />));
   }
 
   return (
     <div className='max-w-7xl gap-14 mx-auto my-10'>
       <div className='mb-10 flex justify-end gap-5'>
         <button
-          onClick={() => dispatch(toggleStock())}
-          className={`border px-3 py-2 rounded-full font-semibold ${
-            stock ? activeClass : null
-          } `}
+          onClick={() => dispatch(sortPost())}
+          className={`border px-3 py-2 rounded-full font-semibold ${latest && activeClass} `}
         >
-          In Stock
+          Latest
         </button>
         <button
-          onClick={() => dispatch(toggleBrand("amd"))}
-          className={`border px-3 py-2 rounded-full font-semibold ${
-            brands.includes("amd") ? activeClass : null
-          }`}
+          onClick={() => dispatch(sortPost())}
+          className={`border px-3 py-2 rounded-full font-semibold ${!latest && activeClass}`}
         >
-          AMD
-        </button>
-        <button
-          onClick={() => dispatch(toggleBrand("intel"))}
-          className={`border px-3 py-2 rounded-full font-semibold ${
-            brands.includes("intel") ? activeClass : null
-          }`}
-        >
-          Intel
+          Oldest
         </button>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14'>

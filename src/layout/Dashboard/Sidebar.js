@@ -7,10 +7,10 @@ const Sidebar = () => {
       <ul className='flex gap-3  flex-col h-full'>
         <li>Admin Dashboard</li>
         <li>
-          <Link to='/dashboard'>Product List</Link>
+          <Link to='all-posts'>All Posts</Link>
         </li>
         <li>
-          <Link to='add-product'> Add Product </Link>
+          <Link to='create-post'>Create New Product</Link>
         </li>
         <li className='mt-auto'>
           <Link to='/'> Back to Home </Link>

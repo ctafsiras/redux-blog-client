@@ -1,14 +1,7 @@
-import { TOGGLE_BRAND, TOGGLE_STOCK } from "../actionTypes/actionTypes";
+import { SORT_POST } from "../actionTypes/actionTypes";
 
-export const toggleBrand = (brandName) => {
+export const sortPost = () => {
   return {
-    type: TOGGLE_BRAND,
-    payload: brandName,
-  };
-};
-
-export const toggleStock = () => {
-  return {
-    type: TOGGLE_STOCK,
+    type: SORT_POST,
   };
 };
